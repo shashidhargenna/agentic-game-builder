@@ -1,0 +1,371 @@
+{
+  "name": "game_builder_workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "game-builder",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -272,
+        -48
+      ],
+      "id": "e115f018-5551-4809-b497-014730d9287e",
+      "name": "Webhook",
+      "webhookId": "2e1ab1d3-f1e3-4264-8a1e-ffb68a140f19"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\n{{ $json.output }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        288,
+        -48
+      ],
+      "id": "103ac8dc-9e94-497e-8270-447d06832c42",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        160
+      ],
+      "id": "15bf5cd0-c515-4b43-b1fc-65f809137351",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGPqwytXxUwOUCod",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "game-answers",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        432,
+        144
+      ],
+      "id": "d08043e5-da93-4a2b-8374-dc6d82d63548",
+      "name": "Webhook1",
+      "webhookId": "317cd07d-2e7d-410d-8acc-96e84d3a21c7"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        336
+      ],
+      "id": "fb6e6a67-b162-42e0-82ee-45d30083e6b3",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGPqwytXxUwOUCod",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1424,
+        208
+      ],
+      "id": "a0890639-9d61-40bc-ad40-b78cd9c3754d",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"gameType\": { \"type\": \"string\" },\n    \"framework\": { \"type\": \"string\" },\n    \"controls\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" }\n    },\n    \"mechanics\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" }\n    },\n    \"gameLoop\": { \"type\": \"string\" },\n    \"files\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" }\n    }\n  },\n  \"required\": [\n    \"gameType\",\n    \"framework\",\n    \"controls\",\n    \"mechanics\",\n    \"gameLoop\",\n    \"files\"\n  ]\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        352
+      ],
+      "id": "1eab2fa7-6572-44e4-8e9e-a3a0027c6be2",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        560
+      ],
+      "id": "341b317a-1460-402c-9a88-54e831f839dd",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGPqwytXxUwOUCod",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1104,
+        384
+      ],
+      "id": "46da115a-0ae6-440e-99e1-8e4c4caeeba6",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGPqwytXxUwOUCod",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Game idea: {{$json.body.gameIdea}}",
+        "options": {
+          "systemMessage": "You are a game design clarification agent.\n\nYour task is to analyze a user's browser game idea and ask only the minimum necessary questions required before implementation.\n\nAsk 3–5 clarification questions related to:\n\n- player controls\n- objective of the game\n- scoring system\n- losing conditions\n- difficulty progression\n\nThe game will be built using HTML, CSS, and JavaScript.\n\nReturn only the questions as a numbered list.\nDo not generate any code."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -64,
+        -48
+      ],
+      "id": "a59f68f3-8cfb-492b-a997-d1904a75fcd4",
+      "name": "Game builder"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=User requirements:\n{{$json.body.answers}}\n\nCreate a structured implementation plan.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a game planning agent.\n\nConvert the user requirements into a structured implementation plan\nfor a browser game built using HTML, CSS, and JavaScript.\n\nReturn ONLY valid JSON that matches the schema.\n\nDo not include explanations.\nDo not include markdown.\nReturn only the JSON object."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        640,
+        144
+      ],
+      "id": "7d56eac5-d743-4620-8380-cab4e4218331",
+      "name": "planning agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Game plan:\n\n{{ JSON.stringify($json) }}\n\nGenerate the full implementation.",
+        "options": {
+          "systemMessage": "You are a browser game developer.\n\nUsing the provided game plan, generate a playable browser game.\n\nRequirements:\n- Use HTML5 Canvas\n- Use vanilla JavaScript\n- Implement the controls from the plan\n- Implement obstacle spawning\n- Implement collision detection\n- Implement score tracking\n- Implement a game loop using requestAnimationFrame\n\nGenerate three files:\n\n1. index.html\n2. style.css\n3. game.js\n\nReturn the files in this exact format:\n\nINDEX.HTML\n---\n<code>\n---\n\nSTYLE.CSS\n---\n<code>\n---\n\nGAME.JS\n---\n<code>\n---"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1024,
+        144
+      ],
+      "id": "ebbae412-01ec-4fc4-b028-e8b353f7a192",
+      "name": "code generator agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Game builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Game builder",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "planning agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "planning agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "planning agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "code generator agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Game builder": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "planning agent": {
+      "main": [
+        [
+          {
+            "node": "code generator agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "code generator agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "794d88a5-9dfe-464f-889e-e6aee3ae628a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0b046c792f3c8bdd4a46540f0887cf88b2ce2d6a1a9b464383d78f7ca3bd5bf1"
+  },
+  "id": "GeU70sN2y-USHEJL1pUPE",
+  "tags": []
+}
